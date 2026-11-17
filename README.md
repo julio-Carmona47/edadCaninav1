@@ -191,3 +191,21 @@ Comprueba en GitHub que tu fork tiene ahora dos ramas: `main` y `v2-validacion`.
 - [ ] No quedan números mágicos en `MainActivity`.
 - [ ] `onCreate()` solo prepara la pantalla; la lógica está en `calcularEdad()`.
 - [ ] El trabajo está en la rama `v2-validacion`, no en `main`.
+
+
+# EdadCaninaMVC
+
+## Reto realizado
+He elegido el reto de **añadir un botón de "Limpiar" que además limpie los errores de validación**.
+Lo he resuelto creando un método `limpiar()` en el `EdadCaninaControlador` que llama al setter del modelo (`setEntrada("")`). Como el modelo es observable y tiene la regla de que al cambiar la entrada se borra el resultado y se resetea la validación, la interfaz se actualiza automáticamente sin tener que tocar el MainActivity.
+
+## Respuestas a «Explícalo con tus palabras»
+
+**1. ¿Qué ventaja tiene separar la lógica de la interfaz (MVC)?**
+Separar el Modelo de la Vista permite que el código sea mucho más fácil de mantener y de testear. Puedo hacer pruebas unitarias (JUnit) del cálculo y la validación sin necesidad de encender el emulador ni tocar la pantalla. Además, si mañana quiero cambiar el diseño de la app, el modelo no se entera.
+
+**2. ¿Qué hace exactamente el símbolo `@={}` frente a `@{}`?**
+El `@={}` es un enlace bidireccional (two-way). Significa que si el usuario escribe en el EditText, el modelo se actualiza solo; y si el modelo cambia, el EditText cambia. El `@{}` es unidireccional: solo lee del modelo para pintar en pantalla (lo usamos para el TextView del resultado).
+
+**3. ¿Por qué es importante conservar el estado al girar la pantalla?**
+Porque al girar, Android destruye la Activity y la vuelve a crear desde cero. Si no usamos `onSaveInstanceState`, el usuario perdería lo que había escrito y el resultado que ya había calculado. Al guardar las variables en el Bundle y restaurarlas en el `onCreate`, la experiencia de usuario no se rompe.
