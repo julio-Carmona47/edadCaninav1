@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- NUEVO: Aquí declaramos el modelo -->
+    <data>
+        <variable
+            name="modelo"
+            type="es.davante.edadcanina.modelo.EdadCaninaModelo" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -8,6 +15,7 @@
         android:padding="24dp"
         android:gravity="center">
 
+        <!-- Enlace bidireccional @={} : escribe en la app y actualiza el modelo -->
         <EditText
             android:id="@+id/age_input"
             android:layout_width="match_parent"
@@ -16,6 +24,7 @@
             android:inputType="number"
             android:maxLength="2"
             android:gravity="center"
+            android:text="@={modelo.entrada}"
             android:importantForAutofill="no" />
 
         <Button
@@ -25,11 +34,13 @@
             android:layout_marginTop="16dp"
             android:text="Calcular" />
 
+        <!-- Enlace unidireccional @{} : la vista lee del modelo -->
         <TextView
             android:id="@+id/result_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:text="@{modelo.resultado}"
             android:textSize="20sp" />
 
     </LinearLayout>

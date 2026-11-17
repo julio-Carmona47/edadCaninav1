@@ -37,7 +37,8 @@ public class EdadCaninaModeloTest {
 
     @Test
     public void testCalculo() {
-        int resultado = modelo.calcular(6);
-        assertEquals(42, resultado); // 6 * 7 = 42
+        modelo.setEntrada("6");
+        modelo.calcular();
+        assertEquals("42 años humanos", modelo.getResultado());
     }
 }
