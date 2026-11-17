@@ -9,8 +9,13 @@ import es.davante.edadcanina.modelo.EdadCaninaModelo;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Claves constantes para guardar el estado (Paso 7)
+    private static final String KEY_ENTRADA = "key_entrada";
+    private static final String KEY_RESULTADO = "key_resultado";
+
     private ActivityMainBinding binding;
-    private EdadCaninaModelo modelo; // Nueva variable
+    private EdadCaninaModelo modelo;
+    private EdadCaninaControlador controlador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +24,26 @@ public class MainActivity extends AppCompatActivity {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        // 1. Instanciamos el modelo
+
         modelo = new EdadCaninaModelo();
+        controlador = new EdadCaninaControlador(modelo);
 
-        // 2. Asociamos el modelo al XML
+
+        if (savedInstanceState != null) {
+            modelo.setEntrada(savedInstanceState.getString(KEY_ENTRADA, ""));
+            modelo.setResultado(savedInstanceState.getString(KEY_RESULTADO, ""));
+        }
+
+
         binding.setModelo(modelo);
+        binding.setControlador(controlador);
+    }
 
-        // 3. El botón llama directamente al método del modelo
-        binding.btnCalc.setOnClickListener(view -> modelo.calcular());
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_ENTRADA, modelo.getEntrada());
+        outState.putString(KEY_RESULTADO, modelo.getResultado());
     }
 }
